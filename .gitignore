@@ -1,0 +1,10 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/AttendanceSystem/FileContentIndex/963ba39b-9921-4ea6-8f83-b42887a035a9.vsidx
+/AttendanceSystem.API/bin/Debug/net8.0
+/AttendanceSystem.API/obj
+/AttendanceSystem.Domain/bin/Debug/net8.0
+/AttendanceSystem.Domain/obj
+/AttendanceSystem.Infra/obj
