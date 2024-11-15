@@ -19,16 +19,16 @@ namespace AttendanceSystem.Domain.Entities
         // رقم الشعبة 
         public int CreditHour { get; set; }
 
-        [ForeignKey("user")]
+       // [ForeignKey("user")]
         public int TeacherId { get; set; }
-        public User Teacher { get; set; }
+        public virtual User Teacher { get; set; }
         
    
          
         public int DepartmentId { get; set; }
-        public Department Department { get; set; }
+        public virtual Department Department { get; set; }
 
 
-        public ICollection<Section> Sections { get; set; }
+        public virtual ICollection<Section> Sections { get; set; }
     }
 }

@@ -19,12 +19,14 @@ namespace AttendanceSystem.Domain.Entities
 
         //[ForeignKey("course")]
         public int CourseId { get; set; }
+        public virtual Course Course { get; set; }
 
         //[ForeignKey("class_room")]
         public int ClassRoomId { get; set; }
-
-        public virtual Course Course { get; set; }
         public virtual ClassRoom ClassRoom { get; set; }
+
+
+
 
         public virtual ICollection<Enrollment> Enrollments { get; set; }    
     }

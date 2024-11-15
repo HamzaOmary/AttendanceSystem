@@ -10,16 +10,19 @@ namespace AttendanceSystem.Domain.Entities
 {
     public class Department
     {
-        [Key]
+        //[Key]
         public int DepartmentId { get; set; }
         public string DepartmentName { get; set; }
         public int HeadUserId { get; set; }
 
-        [ForeignKey("collage")]
-        public int CollageId { get; set; }
-        public Collage Collage { get; set; }
-        public User HeadUser { get; set; }
+        //[ForeignKey("collage")]
+        public int CollegeId { get; set; }
+        public virtual College College { get; set; } 
 
-        public ICollection<Course> Courses { get; set; }
+        public virtual User HeadUser { get; set; } // change it to string if have a problem
+
+        public virtual ICollection<Course> Courses { get; set; }
+
+        public virtual ICollection<User> Users { get; set; }
     }
 }
