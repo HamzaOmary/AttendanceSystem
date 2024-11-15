@@ -10,16 +10,18 @@ namespace AttendanceSystem.Domain.Entities
 {
     public class Enrollment
     {
-        [Key]
+        //[Key]
         public int EnrollmentId { get; set; }
 
-        [ForeignKey("user")]
-        public int userId { get; set; }
-        public User user { get; set; }
+        //[ForeignKey("user")]
+        public int UserId { get; set; }
+        public virtual User User { get; set; }
 
-        [ForeignKey("section")]
-        public int sectionId { get; set; }
-        public Section section { get; set; }
+        //[ForeignKey("section")]
+        public int SectionId { get; set; }
+        public virtual Section Section { get; set; }
         //attendance list
+
+       public virtual ICollection<Attendance> Attendances { get; set; }
     }
 }

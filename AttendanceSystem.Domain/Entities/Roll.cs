@@ -13,5 +13,8 @@ namespace AttendanceSystem.Domain.Entities
         //[Key]
         public int RollId { get; set; }
         public string RollName { get; set; }
+
+
+        public virtual ICollection<User> Users { get; set; }
     }
 }
