@@ -14,8 +14,9 @@ namespace AttendanceSystem.Domain.Entities
         //public int CourseCount { get; set; }//DTO OR RESPONCE
         //public int StudentCount { get; set; }
         public int DeanUserId { get; set; }
-        public virtual User DeanUser { get; set; } // change it to string if have a problem
-        //اسم الكلاس معه virtual
+
+        //public virtual User DeanUser { get; set; } // change it to string if have a problem
+        
 
         public virtual ICollection<User> Users { get; set; }
         public virtual ICollection<Department> Departments { get; set; }

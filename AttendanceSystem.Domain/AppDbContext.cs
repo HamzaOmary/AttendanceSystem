@@ -24,7 +24,7 @@ namespace AttendanceSystem.Domain
             //في داعي  constrant لل virtual?????????????????????
             //في داعي  constrant لل virtual?????????????????????
 
-        /////////////////////////////// User Table //////////////////////////////////////
+            /////////////////////////////// User Table //////////////////////////////////////
             // User Entity Configuration
             modelBuilder.Entity<User>()
                 .Property(u => u.UserId)
@@ -71,15 +71,15 @@ namespace AttendanceSystem.Domain
 
             modelBuilder.Entity<User>()
                 .Property(u => u.CreateDate);
-                //.IsRequired ();
+            //.IsRequired ();
 
             modelBuilder.Entity<User>()
                 .Property(u => u.Gender);
-                //.IsRequired();
+            //.IsRequired();
 
             modelBuilder.Entity<User>()
                 .Property(u => u.JobTitel);
-                //.IsRequired();
+            //.IsRequired();
 
             modelBuilder.Entity<User>()
                 .Property(u => u.Address);
@@ -90,29 +90,29 @@ namespace AttendanceSystem.Domain
               .HasOne(u => u.College)
               .WithMany(c => c.Users)//c => c.Users
               .HasForeignKey(u => u.CollegeId)
-              .OnDelete(DeleteBehavior.Cascade);
-              //.OnDelete(DeleteBehavior.Restrict);// is nssisary ???
+              .OnDelete(DeleteBehavior.NoAction);
+            //.OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<User>()
                 .HasOne(u => u.Department)
                 .WithMany(d => d.Users)
                 .HasForeignKey(u => u.DepartmentId)
-                .OnDelete(DeleteBehavior.Cascade);
-                //.OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.NoAction);
+            //.OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<User>()
                 .HasOne(u => u.Roll)
                 .WithMany(r => r.Users)
                 .HasForeignKey(u => u.RollId)
-                .OnDelete(DeleteBehavior.Cascade);
-                //.OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.NoAction);
+            //.OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<User>()
                 .HasOne(u => u.Login)
                 .WithMany(l => l.Users)
                 .HasForeignKey(u => u.LoginId)
-                .OnDelete(DeleteBehavior.Cascade);
-                // .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.NoAction);
+            // .OnDelete(DeleteBehavior.Restrict);
 
 
 
@@ -128,7 +128,7 @@ namespace AttendanceSystem.Domain
 
             modelBuilder.Entity<Section>()
                 .Property(s => s.EndDateTime);
-                //.IsRequired();
+            //.IsRequired();
 
             modelBuilder.Entity<Section>()
                 .Property(s => s.SectionNumber);
@@ -137,21 +137,27 @@ namespace AttendanceSystem.Domain
 
             modelBuilder.Entity<Section>()
                 .Property(s => s.SectionDays);
-                //.IsRequired();
+            //.IsRequired();
 
             modelBuilder.Entity<Section>()
                .HasOne(s => s.Course)
                .WithMany(c => c.Sections)
                .HasForeignKey(s => s.CourseId)
-               .OnDelete(DeleteBehavior.Cascade);
-               //.OnDelete(DeleteBehavior.Restrict);
+               .OnDelete(DeleteBehavior.NoAction);
+            //.OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Section>()
                 .HasOne(s => s.ClassRoom)
                 .WithMany(cr => cr.Sections)
                 .HasForeignKey(s => s.ClassRoomId)
-                .OnDelete(DeleteBehavior.Cascade);
-                //.OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.NoAction);
+            //.OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Section>()
+                 .HasOne(s => s.Teacher)
+                 .WithMany(t => t.Sections)
+                 .HasForeignKey(s => s.TeacherId)
+                 .OnDelete(DeleteBehavior.NoAction);
 
             /////////////////////////////// Roll Table //////////////////////////////////////
             // Roll Entity Configuration
@@ -161,8 +167,8 @@ namespace AttendanceSystem.Domain
 
             modelBuilder.Entity<Roll>()
                 .Property(r => r.RollName);
-                //.IsRequired()
-                //.HasMaxLength(100);
+            //.IsRequired()
+            //.HasMaxLength(100);
 
 
             /////////////////////////////// Login Table //////////////////////////////////////
@@ -181,8 +187,8 @@ namespace AttendanceSystem.Domain
 
             modelBuilder.Entity<Login>()
                 .Property(l => l.Password);
-                //.HasMaxLength(16)
-                //.IsRequired();
+            //.HasMaxLength(16)
+            //.IsRequired();
 
 
             /////////////////////////////// Enrollment Table //////////////////////////////////////
@@ -195,15 +201,15 @@ namespace AttendanceSystem.Domain
                .HasOne(e => e.User)
                .WithMany(u => u.Enrollments)
                .HasForeignKey(e => e.UserId)
-               .OnDelete(DeleteBehavior.Cascade);
-               //.OnDelete(DeleteBehavior.Restrict);
+               .OnDelete(DeleteBehavior.NoAction);
+            //.OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Enrollment>()
                 .HasOne(e => e.Section)
                 .WithMany(s => s.Enrollments)
                 .HasForeignKey(e => e.SectionId)
-                .OnDelete(DeleteBehavior.Cascade);
-                //.OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.NoAction);
+            //.OnDelete(DeleteBehavior.Restrict);       
 
 
             /////////////////////////////// Department Table //////////////////////////////////////
@@ -222,7 +228,7 @@ namespace AttendanceSystem.Domain
 
             modelBuilder.Entity<Department>()
                 .Property(d => d.HeadUserId);
-            //    .IsRequired();
+                            //    .IsRequired();
             //modelBuilder.Entity<Department>()
             //  .HasIndex(d => d.HeadUserId)
             //  .IsUnique();
@@ -231,8 +237,8 @@ namespace AttendanceSystem.Domain
               .HasOne(d => d.College)
               .WithMany(cl => cl.Departments)
               .HasForeignKey(u => u.CollegeId)
-              .OnDelete(DeleteBehavior.Cascade);
-              //.OnDelete(DeleteBehavior.Restrict);// is nssisary ???
+              .OnDelete(DeleteBehavior.NoAction);
+            //.OnDelete(DeleteBehavior.Restrict);// is nssisary ???
 
             //modelBuilder.Entity<Department>()
             //  .HasOne(d => d.HeadUser)
@@ -265,23 +271,24 @@ namespace AttendanceSystem.Domain
 
             modelBuilder.Entity<Course>()
                .Property(c => c.CreditHour);
-               //.IsRequired();
+            //.IsRequired();
 
-            modelBuilder.Entity<Course>()
-             .HasOne(c => c.Teacher)
-             .WithMany(t => t.Courses)
-             .HasForeignKey(c => c.TeacherId)
-             .OnDelete(DeleteBehavior.Cascade);
-             //.OnDelete(DeleteBehavior.Restrict);// is nssisary ???
+            //modelBuilder.Entity<Course>()
+            // .HasOne(c => c.Teacher)
+            // .WithMany(t => t.Courses)
+            // .HasForeignKey(c => c.TeacherId)
+            // .OnDelete(DeleteBehavior.Cascade);
+
+            //.OnDelete(DeleteBehavior.Restrict);// is nssisary ???
 
             modelBuilder.Entity<Course>()
               .HasOne(c => c.Department)
               .WithMany(d => d.Courses)
               .HasForeignKey(c => c.DepartmentId)
-              .OnDelete(DeleteBehavior.Cascade);
-              //.OnDelete(DeleteBehavior.Restrict);// is nssisary ???
+              .OnDelete(DeleteBehavior.NoAction);
+            //.OnDelete(DeleteBehavior.Restrict);// is nssisary ???
 
-      
+
 
             /////////////////////////////// College Table //////////////////////////////////////
             // Collage Entity Configuration
@@ -299,7 +306,7 @@ namespace AttendanceSystem.Domain
 
             modelBuilder.Entity<College>()
                 .Property(cl => cl.DeanUserId);
-                //.IsRequired();
+            //.IsRequired();
             //modelBuilder.Entity<College>()
             //    .HasIndex(cl => cl.DeanUserId)
             //    .IsUnique();
@@ -338,22 +345,22 @@ namespace AttendanceSystem.Domain
 
             modelBuilder.Entity<Attendance>()
                 .Property(a => a.Date);
-                //.IsRequired();
+            //.IsRequired();
 
 
             modelBuilder.Entity<Attendance>()
                 .HasOne(a => a.User)
                 .WithMany(u => u.Attendances)
                 .HasForeignKey(a => a.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
-                //.OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.NoAction);
+            //.OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Attendance>()
                 .HasOne(a => a.Enrollment)
                 .WithMany(e => e.Attendances)
                 .HasForeignKey(a => a.EnrollmentId)
-                .OnDelete(DeleteBehavior.Cascade);
-                //.OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.NoAction);
+            //.OnDelete(DeleteBehavior.Restrict);
 
 
             /*********************************************************************/
@@ -364,19 +371,17 @@ namespace AttendanceSystem.Domain
             //    .WithMany()
             //    .HasForeignKey(l => l.UserID);
         }
-                             /// <summary>
-                             /// / add virtual ???????//
-                             /// </summary>
+
         public DbSet<User> Users { get; set; }
         public DbSet<Section> Sections { get; set; }
         public DbSet<Roll> Rolls { get; set; }
         public DbSet<Login> Logins { get; set; }
-        public DbSet<Enrollment> Enrollments  { get; set; }
-        public DbSet<Department> Departments  { get; set; }
+        public DbSet<Enrollment> Enrollments { get; set; }
+        public DbSet<Department> Departments { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<College> Colleges { get; set; }
-        public DbSet<ClassRoom> ClassRooms  { get; set; }
-        public DbSet<Attendance> Attendances  { get; set; }
+        public DbSet<ClassRoom> ClassRooms { get; set; }
+        public DbSet<Attendance> Attendances { get; set; }
 
 
     }

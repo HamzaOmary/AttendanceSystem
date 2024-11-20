@@ -19,7 +19,7 @@ namespace AttendanceSystem.Domain.Entities
         public int CollegeId { get; set; }
         public virtual College College { get; set; } 
 
-        public virtual User HeadUser { get; set; } // change it to string if have a problem
+       // public virtual User HeadUser { get; set; } 
 
         public virtual ICollection<Course> Courses { get; set; }
 

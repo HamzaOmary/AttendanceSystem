@@ -25,6 +25,9 @@ namespace AttendanceSystem.Domain.Entities
         public int ClassRoomId { get; set; }
         public virtual ClassRoom ClassRoom { get; set; }
 
+        public int TeacherId { get; set; }
+        public virtual User Teacher { get; set; }
+
 
 
 

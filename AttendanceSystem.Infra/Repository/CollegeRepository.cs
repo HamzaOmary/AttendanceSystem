@@ -42,7 +42,7 @@ namespace AttendanceSystem.Infrastructure.Repositories
             if (collegeToUpdate != null)
             {
 
-                collegeToUpdate.DeanUser=college.DeanUser;
+                collegeToUpdate.DeanUserId = college.DeanUserId;
 
                 await _context.SaveChangesAsync();
             }

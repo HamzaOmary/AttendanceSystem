@@ -38,10 +38,14 @@ namespace AttendanceSystem.Domain.Entities
 
         public int LoginId { get; set; }
         public virtual Login Login { get; set; }
+
         //public ICollection<Course> courses { get; set; }
 
         public virtual ICollection<Enrollment> Enrollments { get; set; }
         public virtual ICollection<Attendance> Attendances { get; set; }
-        public virtual ICollection<Course> Courses  { get; set; }
+        public virtual ICollection<Section> Sections { get; set; }
+
+       // public virtual ICollection<Course> Courses  { get; set; }
+
     }
 }

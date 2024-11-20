@@ -20,8 +20,8 @@ namespace AttendanceSystem.Domain.Entities
         public int CreditHour { get; set; }
 
        // [ForeignKey("user")]
-        public int TeacherId { get; set; }
-        public virtual User Teacher { get; set; }
+        //public int TeacherId { get; set; }
+        //public virtual User Teacher { get; set; }
         
    
          
