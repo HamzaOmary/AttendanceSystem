@@ -36,7 +36,7 @@ namespace AttendanceSystem.Domain.Entities
         public int RollId { get; set; }
         public virtual Roll Roll { get; set; }
 
-        public int LoginId { get; set; }
+       // public int LoginId { get; set; }  ///////اخليها
         public virtual Login Login { get; set; }
 
         //public ICollection<Course> courses { get; set; }

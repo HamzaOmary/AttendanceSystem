@@ -88,7 +88,8 @@ namespace AttendanceSystem.Domain
 
             modelBuilder.Entity<User>()
               .HasOne(u => u.College)
-              .WithMany(c => c.Users)//c => c.Users
+              //.WithMany(c => c.Users)//c => c.Users
+              .WithMany()//c => c.Users
               .HasForeignKey(u => u.CollegeId)
               .OnDelete(DeleteBehavior.NoAction);
             //.OnDelete(DeleteBehavior.Restrict);
@@ -107,11 +108,11 @@ namespace AttendanceSystem.Domain
                 .OnDelete(DeleteBehavior.NoAction);
             //.OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<User>()
-                .HasOne(u => u.Login)
-                .WithMany(l => l.Users)
-                .HasForeignKey(u => u.LoginId)
-                .OnDelete(DeleteBehavior.NoAction);
+            //modelBuilder.Entity<User>()
+            //    .HasOne(u => u.Login)
+            //    .WithMany(l => l.Users)
+            //    .HasForeignKey(u => u.LoginId)
+            //    .OnDelete(DeleteBehavior.NoAction);
             // .OnDelete(DeleteBehavior.Restrict);
 
 
@@ -190,6 +191,13 @@ namespace AttendanceSystem.Domain
             //.HasMaxLength(16)
             //.IsRequired();
 
+
+            modelBuilder.Entity<Login>()
+               .HasOne(u => u.User)
+               .WithOne(l => l.Login)
+               .HasForeignKey<Login>(u => u.UserId)
+               //.HasForeignKey(u => u.UserId)
+               .OnDelete(DeleteBehavior.NoAction);
 
             /////////////////////////////// Enrollment Table //////////////////////////////////////
             // Enrollment Entity Configuration

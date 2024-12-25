@@ -15,5 +15,7 @@ namespace AttendanceSystem.Domain.Interfaces.Repository
         Task AddLoginAsync(Login login);
         Task UpdateLoginAsync(Login login);
         Task DeleteLoginAsync(int id);
+        Task<Login> GetByUsernameAsync(string username);
+
     }
 }

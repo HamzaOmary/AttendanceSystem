@@ -43,5 +43,9 @@ namespace AttendanceSystem.Domain.Services
             {
                 await _loginRepository.DeleteLoginAsync(id);
             }
+
+        //rejester action (dto rejesterdto {name, pass,username, role,dep...})
+        //new login{username, pass, user = new user} 
+        //await _loginRepository.AddLoginAsync(login);
     }
 }

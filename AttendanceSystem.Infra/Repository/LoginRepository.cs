@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using AttendanceSystem.Domain.Entities;
 using AttendanceSystem.Domain.Interfaces.Repository;
 using AttendanceSystem.Domain;
+using System.Runtime.InteropServices;
 
 namespace AttendanceSystem.Infrastructure.Repositories
 {
@@ -56,6 +57,23 @@ namespace AttendanceSystem.Infrastructure.Repositories
                 _context.Logins.Remove(loginToDelete);
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public async Task<Login> GetByUsernameAsync(string username)
+        {
+
+             return await _context.Logins.Where(login => login.Username == username).FirstOrDefaultAsync();
+            //_context.Logins.Update(login);
+            //await _context.SaveChangesAsync();
+
+            //var loginToUpdate = await _context.Logins.Where(x => x.LoginId == login.LoginId).FirstOrDefaultAsync();
+            //if (loginToUpdate != null)
+            //{
+            //    loginToUpdate.Username = login.Username;
+            //    loginToUpdate.Password = login.Password;
+
+            //    await _context.SaveChangesAsync();
+            //}
         }
     }
 }

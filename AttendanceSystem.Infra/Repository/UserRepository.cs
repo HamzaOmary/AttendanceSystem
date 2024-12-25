@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using AttendanceSystem.Domain.Entities;
 using AttendanceSystem.Domain.Interfaces.Repository;
 using AttendanceSystem.Domain;
+using AttendanceSystem.Domain.DomainModel;
 
 namespace AttendanceSystem.Infrastructure.Repositories
 {
@@ -25,7 +26,7 @@ namespace AttendanceSystem.Infrastructure.Repositories
 
         public async Task<IEnumerable<User>> GetAllUsersAsync()
         {
-            return await _context.Users.ToListAsync();
+            return await _context.Users.Include(x=>x.College).ToListAsync();
         }
 
         public async Task AddUserAsync(User user)
@@ -62,6 +63,28 @@ namespace AttendanceSystem.Infrastructure.Repositories
                 _context.Users.Remove(userToDelete);
                 await _context.SaveChangesAsync();
             }
+        }
+
+        //public async Task<User> GetUserByLoginIdAsync(int id)
+        //{
+        //    // return await _context.Users.FindAsync(id);
+        //    // return await _context.Users.FirstOrDefaultAsync(x=>x.UserId==id);
+        //    return await _context.Users.Where(x => x. == id).FirstOrDefaultAsync();
+        //}
+
+        public async Task<DashboardStatisticsModel> GetDashboardStatistics()
+        {
+            var result = new DashboardStatisticsModel();
+            var query =  _context.Users.GroupBy(x=>x.RollId)
+                .Select(x=>new DashboardStatisticsModel
+            {
+                TotalStudent =x.Where(k=>k.RollId == 2).Count(),
+                TotalTeacher =x.Where(k=>k.RollId == 3).Count(),
+                TotalCourses =0
+            });
+
+            result = await query.FirstOrDefaultAsync();/////////////////////////////
+            return result;
         }
     }
 }

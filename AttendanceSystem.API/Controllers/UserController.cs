@@ -57,5 +57,7 @@ namespace AttendanceSystem.API.Controllers
             await _userService.DeleteUserAsync(id);
             return NoContent();
         }
+
+        
     }
 }

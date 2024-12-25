@@ -18,7 +18,7 @@ namespace AttendanceSystem.Domain.Entities
         //public virtual User DeanUser { get; set; } // change it to string if have a problem
         
 
-        public virtual ICollection<User> Users { get; set; }
+        //public virtual ICollection<User> Users { get; set; }
         public virtual ICollection<Department> Departments { get; set; }
 
 

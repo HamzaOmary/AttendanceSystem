@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace AttendanceSystem.Domain
 {
+    //Attendance_Sys_DB
     internal class Connections
     {
         public const string sqlConnStr = """
