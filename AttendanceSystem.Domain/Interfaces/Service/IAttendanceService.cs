@@ -1,4 +1,5 @@
-﻿using AttendanceSystem.Domain.Entities;
+﻿using AttendanceSystem.Domain.DomainModel;
+using AttendanceSystem.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,7 @@ namespace AttendanceSystem.Domain.Interfaces.Service
         Task CreateAttendanceAsync(Attendance attendance);
         Task UpdateAttendanceAsync(Attendance attendance);
         Task DeleteAttendanceAsync(int id);
+
+        Task<List<StudentAttendanceOverviewModel>> GetAttendanceOverviewByIdAsync(int id);
     }
 }

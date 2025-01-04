@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using AttendanceSystem.Domain.Entities;
 using AttendanceSystem.Domain.Interfaces.Service;
+using AttendanceSystem.Domain.Services;
 
 namespace AttendanceSystem.API.Controllers
 {
@@ -56,6 +57,13 @@ namespace AttendanceSystem.API.Controllers
         {
             await _classRoomService.DeleteClassRoomAsync(id);
             return NoContent();
+        }
+
+        [HttpGet("ClassRoom")]
+        public async Task<ActionResult> GetClassRoomName()
+        {
+            var roles = await _classRoomService.GetClassRoomNameAsync();
+            return Ok(roles);
         }
     }
 }

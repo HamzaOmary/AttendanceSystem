@@ -1,4 +1,5 @@
-﻿using AttendanceSystem.Domain.Entities;
+﻿using AttendanceSystem.Domain.DomainModel;
+using AttendanceSystem.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,7 @@ namespace AttendanceSystem.Domain.Interfaces.Repository
         Task AddRollAsync(Roll roll);
         Task UpdateRollAsync(Roll roll);
         Task DeleteRollAsync(int id);
+
+        Task<List<DropDownListModel>> GetRolesNameAsync();
     }
 }

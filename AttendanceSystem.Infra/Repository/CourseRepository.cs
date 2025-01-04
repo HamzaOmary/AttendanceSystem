@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using AttendanceSystem.Domain.Entities;
 using AttendanceSystem.Domain.Interfaces.Repository;
 using AttendanceSystem.Domain;
+using AttendanceSystem.Domain.DomainModel;
 
 namespace AttendanceSystem.Infrastructure.Repositories
 {
@@ -26,11 +27,39 @@ namespace AttendanceSystem.Infrastructure.Repositories
         {
             return await _context.Courses.ToListAsync();
         }
-
+        
         public async Task AddCourseAsync(Course course)
         {
+            //var newCourse = new Course
+            //{
+            //    CourseName = course.CourseName,
+            //    CourseNumber = course.CourseNumber,
+            //    CreditHour = course.CreditHour,
+            //    DepartmentId = course.DepartmentId
+            //};
+
             await _context.Courses.AddAsync(course);
             await _context.SaveChangesAsync();
+
+            // Retrieve the created course with only the required fields
+            //var createdCourse = await _context.Courses
+            //    .Where(c => c.CourseId == course.CourseId)
+            //    .Select(c => new
+            //    {
+            //        c.CourseId,           // Include CourseId
+            //        c.CourseName,         // Include CourseName
+            //        c.CourseNumber,       // Include CourseNumber
+            //        c.CreditHour,         // Include CreditHour
+            //        c.DepartmentId // Flatten the Department's name
+            //    })
+            //    .FirstOrDefaultAsync();
+
+            // Return the result
+            //return CreatedAtAction(nameof(CreateCourseAsync), new { id = createdCourse.CourseId }, createdCourse);
+            //object value = c => new { c.CourseName, c.CourseNumber, c.CreditHour, c.DepartmentId };
+            //object selector = value;
+            //course = await Queryable.Select(_context.Courses, selector);
+
         }
 
         //public async Task UpdateCourseAsync(Course course)
@@ -41,7 +70,7 @@ namespace AttendanceSystem.Infrastructure.Repositories
         //    if (courseToUpdate != null)
         //    {
 
-               
+
 
         //         await _context.SaveChangesAsync();
         //    }
@@ -56,5 +85,75 @@ namespace AttendanceSystem.Infrastructure.Repositories
                 await _context.SaveChangesAsync();
             }
         }
+
+       
+        public async Task<IEnumerable<ListOfCoursesModel>> GetListOfCoursesAsync()
+        {
+            {
+                var courses = await _context.Courses.Include(c => c.Department)
+                    .Select(c => new ListOfCoursesModel
+                    {
+                        CourseName = c.CourseName,
+                        CourseNumber = c.CourseNumber,
+                        Credits =  c.CreditHour,
+                        Department = c.Department.DepartmentName
+                    }
+                    )
+                    .ToListAsync(); // Assuming RollId 2 represents students
+
+                return courses;
+                //// return await _context.Users.FindAsync(id);
+                //// return await _context.Users.FirstOrDefaultAsync(x=>x.UserId==id);
+                //return await _context.Users.Where(x => x.RollId == 2)
+                //.Select(x => new { }
+                //);
+            }
+        }
+
+
+
+
+        //public async Task AddCoursetwoAsync(AddCourseModel courseModel)
+        //{
+        //    await _context.Courses.AddAsync(course);
+        //    await _context.SaveChangesAsync();
+
+        //    // Retrieve the created course with only the required fields
+        //    //var createdCourse = await _context.Courses
+        //    //    .Where(c => c.CourseId == course.CourseId)
+        //    //    .Select(c => new
+        //    //    {
+        //    //        c.CourseId,           // Include CourseId
+        //    //        c.CourseName,         // Include CourseName
+        //    //        c.CourseNumber,       // Include CourseNumber
+        //    //        c.CreditHour,         // Include CreditHour
+        //    //        c.DepartmentId // Flatten the Department's name
+        //    //    })
+        //    //    .FirstOrDefaultAsync();
+
+        //    // Return the result
+        //    //return CreatedAtAction(nameof(CreateCourseAsync), new { id = createdCourse.CourseId }, createdCourse);
+        //    //object value = c => new { c.CourseName, c.CourseNumber, c.CreditHour, c.DepartmentId };
+        //    //object selector = value;
+        //    //course = await Queryable.Select(_context.Courses, selector);
+
+        //}
+
+        public async Task AddCoursetwoAsync(Course course)
+        {
+
+            _context.Courses.AddAsync(course);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<List<DropDownListModel>> GetCourseDropDownAsync()
+        {
+            return await _context.Courses
+                .Select(c => new DropDownListModel { Id = c.CourseId , Name = c.CourseName })
+                .ToListAsync();
+        }
+
+
+
     }
 }

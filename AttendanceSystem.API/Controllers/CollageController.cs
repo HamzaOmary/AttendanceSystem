@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using AttendanceSystem.Domain.Entities;
 using AttendanceSystem.Domain.Interfaces.Service;
+using AttendanceSystem.Domain.Services;
 
 namespace AttendanceSystem.API.Controllers
 {
@@ -21,9 +22,7 @@ namespace AttendanceSystem.API.Controllers
         public async Task<ActionResult<IEnumerable<College>>> GetAllColleges()
         {
             var colleges = await _collegeService.GetAllCollegesAsync();
-            return Ok
-
-(colleges);
+            return Ok (colleges);
         }
 
         [HttpGet("{id}")]
@@ -58,6 +57,13 @@ namespace AttendanceSystem.API.Controllers
         {
             await _collegeService.DeleteCollegeAsync(id);
             return NoContent();
+        }
+
+        [HttpGet("colleges")]
+        public async Task<ActionResult> GetCollegesName()
+        {
+            var colleges = await _collegeService.GetCollegesNameAsync();
+            return Ok(colleges);
         }
     }
 }

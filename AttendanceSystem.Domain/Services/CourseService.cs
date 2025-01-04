@@ -1,4 +1,5 @@
-﻿using AttendanceSystem.Domain.Entities;
+﻿using AttendanceSystem.Domain.DomainModel;
+using AttendanceSystem.Domain.Entities;
 using AttendanceSystem.Domain.Interfaces.Repository;
 using AttendanceSystem.Domain.Interfaces.Service;
 using System;
@@ -42,5 +43,44 @@ namespace AttendanceSystem.Domain.Services
         {
             await _courseRepository.DeleteCourseAsync(id);
         }
+       
+        public async Task<IEnumerable<ListOfCoursesModel>> GetListOfCoursesAsync()
+        {
+            return await _courseRepository.GetListOfCoursesAsync();
+        }
+
+        //public async Task AddCourseTwoAsync(AddCourseModel model)
+        //{
+        //    var course = new Course
+        //    {
+        //        CourseName = model.CourseName,
+        //        CourseNumber = model.CourseNumber,
+        //        CreditHour = model.CreditsHour,
+        //        DepartmentId = model.DepartmentId 
+                
+        //    };
+
+        //    await _courseRepository.AddCoursetwoAsync(course);
+        //}
+
+        public async Task AddCoursetwoAsync(AddCourseModel model)
+        {
+            var newcourse = new Course
+            {
+                CourseName = model.CourseName,
+                CourseNumber = model.CourseNumber,
+                CreditHour = model.CreditHour,
+                DepartmentId = model.DepartmentId
+
+            };
+
+            await _courseRepository.AddCoursetwoAsync(newcourse);
+        }
+
+        public async Task<List<DropDownListModel>> GetCourseDropDownAsync()
+        {
+            return await _courseRepository.GetCourseDropDownAsync();
+        }
+
     }
 }

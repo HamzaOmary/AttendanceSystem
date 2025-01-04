@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using AttendanceSystem.Domain.Entities;
 using AttendanceSystem.Domain.Interfaces.Repository;
 using AttendanceSystem.Domain;
+using AttendanceSystem.Domain.DomainModel;
 
 namespace AttendanceSystem.Infrastructure.Repositories
 {
@@ -47,6 +48,13 @@ namespace AttendanceSystem.Infrastructure.Repositories
                 _context.ClassRooms.Remove(classRoomToDelete);
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public async Task<List<DropDownListModel>> GetClassRoomNameAsync()
+        {
+            return await _context.ClassRooms
+                .Select(r => new DropDownListModel { Id = r.ClassRoomId, Number = r.ClassNumber })
+                .ToListAsync();
         }
     }
 }

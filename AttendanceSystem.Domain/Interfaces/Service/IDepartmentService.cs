@@ -1,4 +1,5 @@
-﻿using AttendanceSystem.Domain.Entities;
+﻿using AttendanceSystem.Domain.DomainModel;
+using AttendanceSystem.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,7 @@ namespace AttendanceSystem.Domain.Interfaces.Service
         Task CreateDepartmentAsync(Department department);
         Task UpdateDepartmentAsync(Department department);
         Task DeleteDepartmentAsync(int id);
+
+        Task<List<DropDownListModel>> GetDepartmentsNameAsync();
     }
 }

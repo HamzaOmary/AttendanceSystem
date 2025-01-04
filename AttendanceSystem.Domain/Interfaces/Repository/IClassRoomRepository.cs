@@ -1,4 +1,5 @@
-﻿using AttendanceSystem.Domain.Entities;
+﻿using AttendanceSystem.Domain.DomainModel;
+using AttendanceSystem.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +17,7 @@ namespace AttendanceSystem.Domain.Interfaces.Repository
         
         //Task UpdateClassRoomAsync(ClassRoom classRoom);
         Task DeleteClassRoomAsync(int id);
+
+        Task<List<DropDownListModel>> GetClassRoomNameAsync();
     }
 }

@@ -35,9 +35,9 @@ namespace AttendanceSystem.API.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginModel login)
         {
-            
+            //BCrypt.Net.BCrypt.Verify(model.Password, user.Password)
 
-            if (!string.IsNullOrEmpty(login.Username) && !string.IsNullOrEmpty(login.Password)) // Replace with your validation logic
+            if (!string.IsNullOrEmpty(login.Username) && !string.IsNullOrEmpty(login.Password)) 
             {
 
                 // Fetch user from database using the repository  //getbyusername()
@@ -47,11 +47,11 @@ namespace AttendanceSystem.API.Controllers
 
                 var userRoll = await _rollRepository.GetRollByIdAsync(userInfo.RollId);
 
-                //check password
-                if (login.Password == userLogin.Password)
+                //check password  if (login.Password == userLogin.Password)
+                if (BCrypt.Net.BCrypt.Verify(login.Password , userLogin.Password))
                 {
                     //Generat JWT token
-                    var token = GenerateJwtToken(userLogin.Username, userRoll.RollName);
+                    var token = GenerateJwtToken(userLogin.Username, userRoll.RollName ,userLogin.UserId);
                     return Ok(new LoginResponceModel
                     {
                         token = token
@@ -83,17 +83,18 @@ namespace AttendanceSystem.API.Controllers
         //    throw new NotImplementedException();
         //}
 
-        private string GenerateJwtToken(string username, string rollName)
+        private string GenerateJwtToken(string username, string rollName, int userId )
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
             var claims = new[]
             {
+                //new Claim(ClaimTypes.Sid, userId),
                 new Claim(ClaimTypes.NameIdentifier, username),
                 new Claim(ClaimTypes.Role, rollName),
                 //new Claim(ClaimTypes.Name,name),
-                //new Claim(ClaimTypes.Sid,userId.ToString())
+                new Claim(ClaimTypes.Sid,userId.ToString())
             };
 
             var token = new JwtSecurityToken(

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using AttendanceSystem.Domain.Entities;
 using AttendanceSystem.Domain.Interfaces.Service;
+using AttendanceSystem.Domain.Services;
 
 namespace AttendanceSystem.API.Controllers
 {
@@ -18,7 +19,7 @@ namespace AttendanceSystem.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Department>>> GetAllDepartments()
+        public async Task<ActionResult<IEnumerable<Department>>> GetAllDepartmentsAsync()
         {
             var departments = await _departmentService.GetAllDepartmentsAsync();
             return Ok(departments);
@@ -56,6 +57,14 @@ namespace AttendanceSystem.API.Controllers
         {
             await _departmentService.DeleteDepartmentAsync(id);
             return NoContent();
+        }
+
+
+        [HttpGet("departments")]
+        public async Task<ActionResult> GetDepartmentsName()
+        {
+            var departments = await _departmentService.GetDepartmentsNameAsync();
+            return Ok(departments);
         }
     }
 }

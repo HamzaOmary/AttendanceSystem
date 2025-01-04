@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using AttendanceSystem.Domain.Entities;
 using AttendanceSystem.Domain.Interfaces.Repository;
 using AttendanceSystem.Domain;
+using AttendanceSystem.Domain.DomainModel;
 
 namespace AttendanceSystem.Infrastructure.Repositories
 {
@@ -56,6 +57,13 @@ namespace AttendanceSystem.Infrastructure.Repositories
                 _context.Rolls.Remove(rollToDelete);
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public async Task<List<DropDownListModel>> GetRolesNameAsync()
+        {
+            return await _context.Rolls
+                .Select(r => new DropDownListModel { Id = r.RollId, Name = r.RollName })
+                .ToListAsync();
         }
     }
 }

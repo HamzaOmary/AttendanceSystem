@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using AttendanceSystem.Domain.Entities;
 using AttendanceSystem.Domain.Interfaces.Repository;
 using AttendanceSystem.Domain;
+using AttendanceSystem.Domain.DomainModel;
 
 namespace AttendanceSystem.Infrastructure.Repositories
 {
@@ -56,6 +57,13 @@ namespace AttendanceSystem.Infrastructure.Repositories
                 _context.Colleges.Remove(collegeToDelete);
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public async Task<List<DropDownListModel>> GetCollegesNameAsync()
+        {
+            return await _context.Colleges
+                .Select(c => new DropDownListModel { Id = c.CollegeId, Name = c.CollegeName })
+                .ToListAsync();
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using AttendanceSystem.Domain.Entities;
 using AttendanceSystem.Domain.Interfaces.Service;
+using AttendanceSystem.Domain.DomainModel;
 
 namespace AttendanceSystem.API.Controllers
 {
@@ -57,5 +58,28 @@ namespace AttendanceSystem.API.Controllers
             await _attendanceService.DeleteAttendanceAsync(id);
             return NoContent();
         }
+
+        [HttpGet("AttendanceOverview/{id}")]
+        public async Task<ActionResult<List<StudentAttendanceOverviewModel>>> GetAttendanceOverviewById(int id)
+        {
+            var attendanceOverviewList = await _attendanceService.GetAttendanceOverviewByIdAsync(id);
+
+            if (attendanceOverviewList == null || !attendanceOverviewList.Any())
+            {
+                return NotFound(); // Return 404 if no records are found
+            }
+
+            return Ok(attendanceOverviewList);
+        }
+
+        //[HttpGet("AttendanceOverview/{id}")]
+        //public async Task<ActionResult<StudentAttendanceOverviewModel>> GetAttendanceOverviewById(int id)
+        //{
+        //    var attendance = await _attendanceService.GetAttendanceOverviewById(id);
+        //    if (attendance == null)
+        //        return NotFound();
+
+        //    return Ok(attendance);
+        //}
     }
 }

@@ -1,4 +1,5 @@
-﻿using AttendanceSystem.Domain.Entities;
+﻿using AttendanceSystem.Domain.DomainModel;
+using AttendanceSystem.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,10 @@ namespace AttendanceSystem.Domain.Interfaces.Service
         Task CreateCourseAsync(Course course);
        // Task UpdateCourseAsync(Course course);
         Task DeleteCourseAsync(int id);
+
+        Task<IEnumerable<ListOfCoursesModel>> GetListOfCoursesAsync();
+        Task<List<DropDownListModel>> GetCourseDropDownAsync();
+
+        Task AddCoursetwoAsync(AddCourseModel model);
     }
 }

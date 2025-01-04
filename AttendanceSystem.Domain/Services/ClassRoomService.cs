@@ -1,4 +1,5 @@
-﻿using AttendanceSystem.Domain.Entities;
+﻿using AttendanceSystem.Domain.DomainModel;
+using AttendanceSystem.Domain.Entities;
 using AttendanceSystem.Domain.Interfaces.Repository;
 using AttendanceSystem.Domain.Interfaces.Service;
 using System;
@@ -41,6 +42,11 @@ namespace AttendanceSystem.Domain.Services
         public async Task DeleteClassRoomAsync(int id)
         {
             await _classRoomRepository.DeleteClassRoomAsync(id);
+        }
+
+        public async Task<List<DropDownListModel>> GetClassRoomNameAsync()
+        {
+            return await _classRoomRepository.GetClassRoomNameAsync();
         }
     }
 }

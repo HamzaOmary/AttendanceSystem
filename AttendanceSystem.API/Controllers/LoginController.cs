@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using AttendanceSystem.Domain.Entities;
 using AttendanceSystem.Domain.Interfaces.Service;
+using AttendanceSystem.Domain.DomainModel;
 
 namespace AttendanceSystem.API.Controllers
 {
@@ -34,6 +35,17 @@ namespace AttendanceSystem.API.Controllers
             return Ok(login);
         }
 
+
+        [HttpGet("ByUserId{id}")]
+        public async Task<ActionResult<Login>> GetLoginByUserId(int id)
+        {
+            var login = await _loginService.GetLoginByUserIdAsync(id);
+            if (login == null)
+                return NotFound();
+
+            return Ok(login);
+        }
+
         [HttpPost]
         public async Task<ActionResult> CreateLogin([FromBody] Login login)
         {
@@ -57,5 +69,39 @@ namespace AttendanceSystem.API.Controllers
             await _loginService.DeleteLoginAsync(id);
             return NoContent();
         }
+
+        [HttpPut("update-password")]
+        public async Task<IActionResult> UpdatePassword([FromBody] UpdateLoginModel model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try
+            {
+                await _loginService.UpdatePasswordAsync(model);
+                return Ok(new { message = "Password Updated successfully" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+
+        //[HttpPut("update-password")]
+        //public async Task<ActionResult> UpdatePassword([FromBody] UpdateLoginModel model)
+        //{
+        //    if (!ModelState.IsValid)
+        //        return BadRequest(ModelState);
+
+        //     await _loginService.UpdatePasswordAsync(model);
+
+        //    //if (!isUpdated)
+        //    //    return Unauthorized();
+
+        //    //return NoContent();
+
+        //    return Ok(new { message = "Password Updated successfully" });
+        //}
     }
 }

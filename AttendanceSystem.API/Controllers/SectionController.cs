@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using AttendanceSystem.Domain.Entities;
 using AttendanceSystem.Domain.Interfaces.Service;
+using AttendanceSystem.Domain.DomainModel;
 
 namespace AttendanceSystem.API.Controllers
 {
@@ -57,5 +58,60 @@ namespace AttendanceSystem.API.Controllers
             await _sectionService.DeleteSectionAsync(id);
             return NoContent();
         }
+
+        [HttpGet("TeachingInformation/{teacherId}")]
+        public async Task<ActionResult<IEnumerable<TeachingInformationModel>>> GetTeachingInformationByIdAsync(int teacherId)
+        {
+
+            var sectionsInfo = await _sectionService.GetTeachingInformationByIdAsync(teacherId);
+            if (sectionsInfo == null )
+              return NotFound();
+
+            return Ok(sectionsInfo);
+        }
+
+        [HttpPost("AddSection")]
+        public async Task<ActionResult> AddSection([FromBody] AddSectionModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                // Call the service method to add the section
+                await _sectionService.AddSectionAsyc(model);
+                return Ok(new { message = "Section added successfully" });
+            }
+            catch (InvalidOperationException ex)
+            {
+                // If there's a conflict, return a 409 Conflict response
+                return Conflict(new { message = ex.Message });
+            }
+
+            //await _sectionService.AddSectionAsyc(model);
+            //return Ok(new { message = "Section added successfully" });
+        }
+
+
+        //// POST: api/Sections/CheckConflict
+        //[HttpPost("CheckConflict")]
+        //public async Task<IActionResult> CheckSectionConflict([FromBody] Section section)
+        //{
+        //    if (section == null)
+        //    {
+        //        return BadRequest("Invalid section data.");
+        //    }
+
+        //    bool hasConflict = await _sectionService.FindSectionConflictAsync(section);
+
+        //    if (hasConflict)
+        //    {
+        //        return Conflict("The section has a conflict with an existing one.");
+        //    }
+
+        //    return Ok("No conflicts found.");
+        //}
     }
 }

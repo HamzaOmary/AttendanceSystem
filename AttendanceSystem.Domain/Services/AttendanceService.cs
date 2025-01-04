@@ -1,4 +1,5 @@
-﻿using AttendanceSystem.Domain.Entities;
+﻿using AttendanceSystem.Domain.DomainModel;
+using AttendanceSystem.Domain.Entities;
 using AttendanceSystem.Domain.Interfaces.Repository;
 using AttendanceSystem.Domain.Interfaces.Service;
 using System;
@@ -42,5 +43,7 @@ namespace AttendanceSystem.Domain.Services
         {
             await _attendanceRepository.DeleteAttendanceAsync(id);
         }
+
+        public async Task<List<StudentAttendanceOverviewModel>> GetAttendanceOverviewByIdAsync(int id) => await _attendanceRepository.GetAttendanceOverviewByIdAsync(id);
     }
 }

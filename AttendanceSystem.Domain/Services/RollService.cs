@@ -1,4 +1,5 @@
-﻿using AttendanceSystem.Domain.Entities;
+﻿using AttendanceSystem.Domain.DomainModel;
+using AttendanceSystem.Domain.Entities;
 using AttendanceSystem.Domain.Interfaces.Repository;
 using AttendanceSystem.Domain.Interfaces.Service;
 using System;
@@ -42,5 +43,11 @@ namespace AttendanceSystem.Domain.Services
         {
             await _rollRepository.DeleteRollAsync(id);
         }
+
+        public async Task<List<DropDownListModel>> GetRolesNameAsync()
+        {
+            return await _rollRepository.GetRolesNameAsync();
+        }
+
     }
 }

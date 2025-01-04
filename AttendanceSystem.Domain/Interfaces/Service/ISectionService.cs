@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AttendanceSystem.Domain.DomainModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,5 +15,11 @@ namespace AttendanceSystem.Domain.Interfaces.Service
         Task CreateSectionAsync(Entities.Section section);
         Task UpdateSectionAsync(Entities.Section section);
         Task DeleteSectionAsync(int id);
+
+        Task<IEnumerable<TeachingInformationModel>> GetTeachingInformationByIdAsync(int teacherId);
+
+        Task AddSectionAsyc(AddSectionModel model);
+
+        Task <bool> FindSectionConflictAsync(Entities.Section section);
     }
 }
